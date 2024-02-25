@@ -70,6 +70,6 @@
     typedef std::map<std::tuple<int, int>, Tile> TileMap;
 
     //include functions
-    int eventListener(sf::RenderWindow &window, sf::Event &event);
+    int eventListener(sf::RenderWindow &i_window, sf::Event &i_event);
 
 #endif

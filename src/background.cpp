@@ -1,10 +1,5 @@
 #include "include/background.hpp"
 
-bool intersectWithView(sf::Sprite &sprite, sf::View &view)
-{
-    return view.getViewport().intersects(sf::FloatRect(sprite.getPosition().x, sprite.getPosition().y, sprite.getGlobalBounds().width, sprite.getGlobalBounds().height));
-}
-
 Background::Background()
 {
     this->sky_texture.loadFromFile("./assets/backgrounds/sky.png");
@@ -36,12 +31,12 @@ Background::~Background()
 {
 }
 
-void Background::setPosition(sf::Vector2f pos)
+void Background::setPosition(sf::Vector2f i_pos)
 {
-    this->sky.setPosition(pos);
-    this->tower.setPosition(pos);
-    this->town.setPosition(pos);
-    this->mountain.setPosition(pos);
+    this->sky.setPosition(i_pos);
+    this->tower.setPosition(i_pos);
+    this->town.setPosition(i_pos);
+    this->mountain.setPosition(i_pos);
 }
 
 void Background::update(int i_view_x, int i_view_y, int i_prev_view_x, int i_prev_view_y)
@@ -51,29 +46,33 @@ void Background::update(int i_view_x, int i_view_y, int i_prev_view_x, int i_pre
     this->town.setPosition(sf::Vector2f(i_view_x, i_view_y));
     this->mountain.setPosition(sf::Vector2f(i_view_x, i_view_y));
 
-    if (i_prev_view_x - i_view_x < 0) {
-        this->tower.setTextureRect(sf::IntRect(this->tower.getTextureRect().left + 1, this->tower.getTextureRect().top, SCREEN_WIDTH, SCREEN_HEIGHT));
-        this->town.setTextureRect(sf::IntRect(this->town.getTextureRect().left + 2, this->town.getTextureRect().top, SCREEN_WIDTH, SCREEN_HEIGHT));
-        this->mountain.setTextureRect(sf::IntRect(this->mountain.getTextureRect().left + 3, this->mountain.getTextureRect().top, SCREEN_WIDTH, SCREEN_HEIGHT));
-    }
-    else if (i_prev_view_x - i_view_x > 0) {
-        this->tower.setTextureRect(sf::IntRect(this->tower.getTextureRect().left - 1, this->tower.getTextureRect().top, SCREEN_WIDTH, SCREEN_HEIGHT));
-        this->town.setTextureRect(sf::IntRect(this->town.getTextureRect().left - 2, this->town.getTextureRect().top, SCREEN_WIDTH, SCREEN_HEIGHT));
-        this->mountain.setTextureRect(sf::IntRect(this->mountain.getTextureRect().left - 3, this->mountain.getTextureRect().top, SCREEN_WIDTH, SCREEN_HEIGHT));
-    }
+    this->time = this->clock.getElapsedTime();
+    this->seconds = this->time.asSeconds();
 
-    if (i_prev_view_y - i_view_y < 0) {
-        this->tower.setTextureRect(sf::IntRect(this->tower.getTextureRect().left, this->tower.getTextureRect().top + 1, SCREEN_WIDTH, SCREEN_HEIGHT));
-        this->town.setTextureRect(sf::IntRect(this->town.getTextureRect().left, this->town.getTextureRect().top + 2, SCREEN_WIDTH, SCREEN_HEIGHT));
-        this->mountain.setTextureRect(sf::IntRect(this->mountain.getTextureRect().left, this->mountain.getTextureRect().top + 3, SCREEN_WIDTH, SCREEN_HEIGHT));
-    }
-    else if (i_prev_view_y - i_view_y > 0) {
-        this->tower.setTextureRect(sf::IntRect(this->tower.getTextureRect().left, this->tower.getTextureRect().top - 1, SCREEN_WIDTH, SCREEN_HEIGHT));
-        this->town.setTextureRect(sf::IntRect(this->town.getTextureRect().left, this->town.getTextureRect().top - 2, SCREEN_WIDTH, SCREEN_HEIGHT));
-        this->mountain.setTextureRect(sf::IntRect(this->mountain.getTextureRect().left, this->mountain.getTextureRect().top - 3, SCREEN_WIDTH, SCREEN_HEIGHT));
-    }
+    if (this->seconds > 0.02) {
+        if (i_prev_view_x - i_view_x < 0) {
+            this->tower.setTextureRect(sf::IntRect(this->tower.getTextureRect().left + 1, this->tower.getTextureRect().top, SCREEN_WIDTH, SCREEN_HEIGHT));
+            this->town.setTextureRect(sf::IntRect(this->town.getTextureRect().left + 3, this->town.getTextureRect().top, SCREEN_WIDTH, SCREEN_HEIGHT));
+            this->mountain.setTextureRect(sf::IntRect(this->mountain.getTextureRect().left + 5, this->mountain.getTextureRect().top, SCREEN_WIDTH, SCREEN_HEIGHT));
+        }
+        else if (i_prev_view_x - i_view_x > 0) {
+            this->tower.setTextureRect(sf::IntRect(this->tower.getTextureRect().left - 1, this->tower.getTextureRect().top, SCREEN_WIDTH, SCREEN_HEIGHT));
+            this->town.setTextureRect(sf::IntRect(this->town.getTextureRect().left - 3, this->town.getTextureRect().top, SCREEN_WIDTH, SCREEN_HEIGHT));
+            this->mountain.setTextureRect(sf::IntRect(this->mountain.getTextureRect().left - 5, this->mountain.getTextureRect().top, SCREEN_WIDTH, SCREEN_HEIGHT));
+        }
 
-    std::cout << "mountain top: " << this->mountain.getTextureRect().top << std::endl;
+        if (i_prev_view_y - i_view_y < 0) {
+            this->tower.setTextureRect(sf::IntRect(this->tower.getTextureRect().left, this->tower.getTextureRect().top + 1, SCREEN_WIDTH, SCREEN_HEIGHT));
+            this->town.setTextureRect(sf::IntRect(this->town.getTextureRect().left, this->town.getTextureRect().top + 2, SCREEN_WIDTH, SCREEN_HEIGHT));
+            this->mountain.setTextureRect(sf::IntRect(this->mountain.getTextureRect().left, this->mountain.getTextureRect().top + 3, SCREEN_WIDTH, SCREEN_HEIGHT));
+        }
+        else if (i_prev_view_y - i_view_y > 0) {
+            this->tower.setTextureRect(sf::IntRect(this->tower.getTextureRect().left, this->tower.getTextureRect().top - 1, SCREEN_WIDTH, SCREEN_HEIGHT));
+            this->town.setTextureRect(sf::IntRect(this->town.getTextureRect().left, this->town.getTextureRect().top - 2, SCREEN_WIDTH, SCREEN_HEIGHT));
+            this->mountain.setTextureRect(sf::IntRect(this->mountain.getTextureRect().left, this->mountain.getTextureRect().top - 3, SCREEN_WIDTH, SCREEN_HEIGHT));
+        }
+        this->clock.restart();
+    }
 
     //std::cout << i_prev_view_x << " - " <<  i_view_x << " = " << i_prev_view_x - i_view_x << std::endl;
 
@@ -81,12 +80,12 @@ void Background::update(int i_view_x, int i_view_y, int i_prev_view_x, int i_pre
     // this->sky.setTextureRect(sf::IntRect(this->sky.getTextureRect().left - 1, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
 }
 
-void Background::draw(sf::RenderWindow &window)
+void Background::draw(sf::RenderWindow &i_window)
 {
-    window.draw(this->sky);
-    window.draw(this->tower);
-    window.draw(this->town);
-    window.draw(this->mountain);
+    i_window.draw(this->sky);
+    i_window.draw(this->tower);
+    i_window.draw(this->town);
+    i_window.draw(this->mountain);
 }
 
 // void Background::moveSky(float x, float y)

@@ -26,19 +26,19 @@ void Player::update()
     }
 }
 
-void Player::draw(sf::RenderWindow &window)
+void Player::draw(sf::RenderWindow &i_window)
 {
-    window.draw(player);
+    i_window.draw(player);
 }
 
-void Player::move(float x, float y)
+void Player::move(float i_x, float i_y)
 {
-    player.move(x, y);
+    player.move(i_x, i_y);
 }
 
-void Player::setPosition(float x, float y)
+void Player::setPosition(float i_x, float i_y)
 {
-    player.setPosition(x, y);
+    player.setPosition(i_x, i_y);
 }
 
 sf::Vector2f Player::getPosition()

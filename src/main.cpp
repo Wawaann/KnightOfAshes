@@ -20,6 +20,8 @@ int main()
 
     window.setVerticalSyncEnabled(true);
 
+    window.setMouseCursorVisible(false);
+
     window.setPosition(sf::Vector2i((video_mode.width / 2) - (SCREEN_WIDTH / 2), (video_mode.height / 2) - (SCREEN_HEIGHT / 2)));
 
     std::unique_ptr<MapManager> map = std::make_unique<MapManager>();

@@ -19,7 +19,7 @@ unsigned short MapManager::get_map_sketch_width() const
     return this->map_sketch.getSize().x;
 }
 
-void MapManager::loadMap(Player &player)
+void MapManager::loadMap(Player &i_player)
 {
     map_sketch.loadFromFile("./assets/levels/level" + std::to_string(static_cast<unsigned short>(this->current_level)) + ".png");
 
@@ -30,7 +30,7 @@ void MapManager::loadMap(Player &player)
         for (unsigned short j = 0; j < map_width; j++) {
 
             if (map_sketch.getPixel(j, i) == sf::Color(30, 30, 200)) {
-                player.setPosition(j * TILE_SIZE, i * TILE_SIZE);
+                i_player.setPosition(j * TILE_SIZE, i * TILE_SIZE);
             }
 
             // (0, 0, 0)-> UNDERGROUND_0
@@ -144,7 +144,7 @@ void MapManager::update_levelsketch(const unsigned short i_current_level)
 
 // A fix les sprite sont pas bon
 
-void MapManager::drawMap(sf::RenderWindow &window)
+void MapManager::drawMap(sf::RenderWindow &i_window)
 {
     sf::Texture texture;
     texture.loadFromFile("./assets/tile.png");
@@ -154,49 +154,49 @@ void MapManager::drawMap(sf::RenderWindow &window)
             sprite.setTexture(texture);
             sprite.setPosition(tile.pos);
             sprite.setTextureRect(tile.texture_rect);
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == UNDERGROUND_1) {
             sf::Sprite sprite;
             sprite.setTexture(texture);
             sprite.setPosition(tile.pos);
             sprite.setTextureRect(tile.texture_rect);
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == UNDERGROUND_2) {
             sf::Sprite sprite;
             sprite.setTexture(texture);
             sprite.setPosition(tile.pos);
             sprite.setTextureRect(tile.texture_rect);
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == GROUND_0) {
             sf::Sprite sprite;
             sprite.setTexture(texture);
             sprite.setPosition(tile.pos);
             sprite.setTextureRect(tile.texture_rect);
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == GROUND_1) {
             sf::Sprite sprite;
             sprite.setTexture(texture);
             sprite.setPosition(tile.pos);
             sprite.setTextureRect(tile.texture_rect);
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == GROUND_2) {
             sf::Sprite sprite;
             sprite.setTexture(texture);
             sprite.setPosition(tile.pos);
             sprite.setTextureRect(tile.texture_rect);
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == GROUND_3) {
             sf::Sprite sprite;
             sprite.setTexture(texture);
             sprite.setPosition(tile.pos);
             sprite.setTextureRect(tile.texture_rect);
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == EDGE_0) {
             sf::Sprite sprite;
@@ -206,7 +206,7 @@ void MapManager::drawMap(sf::RenderWindow &window)
             if (tile.is_reverse) {
                 sprite.setScale(-1, 1);
             }
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == EDGE_1) {
             sf::Sprite sprite;
@@ -216,7 +216,7 @@ void MapManager::drawMap(sf::RenderWindow &window)
             if (tile.is_reverse) {
                 sprite.setScale(-1, 1);
             }
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == EDGE_2) {
             sf::Sprite sprite;
@@ -226,49 +226,49 @@ void MapManager::drawMap(sf::RenderWindow &window)
             if (tile.is_reverse) {
                 sprite.setScale(-1, 1);
             }
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == PLATFORM_0) {
             sf::Sprite sprite;
             sprite.setTexture(texture);
             sprite.setPosition(tile.pos);
             sprite.setTextureRect(tile.texture_rect);
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == PLATFORM_1) {
             sf::Sprite sprite;
             sprite.setTexture(texture);
             sprite.setPosition(tile.pos);
             sprite.setTextureRect(tile.texture_rect);
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == PLATFORM_2) {
             sf::Sprite sprite;
             sprite.setTexture(texture);
             sprite.setPosition(tile.pos);
             sprite.setTextureRect(tile.texture_rect);
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == PLATFORM_3) {
             sf::Sprite sprite;
             sprite.setTexture(texture);
             sprite.setPosition(tile.pos);
             sprite.setTextureRect(tile.texture_rect);
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == BORDER_0) {
             sf::Sprite sprite;
             sprite.setTexture(texture);
             sprite.setPosition(tile.pos);
             sprite.setTextureRect(tile.texture_rect);
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == BORDER_1) {
             sf::Sprite sprite;
             sprite.setTexture(texture);
             sprite.setPosition(tile.pos);
             sprite.setTextureRect(tile.texture_rect);
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == BORDER_2) {
             sf::Sprite sprite;
@@ -278,7 +278,7 @@ void MapManager::drawMap(sf::RenderWindow &window)
             if (tile.is_reverse) {
                 sprite.setScale(-1, 1);
             }
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == STAIRS_0) {
             sf::Sprite sprite;
@@ -288,7 +288,7 @@ void MapManager::drawMap(sf::RenderWindow &window)
             if (tile.is_reverse) {
                 sprite.setScale(-1, 1);
             }
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == STAIRS_1) {
             sf::Sprite sprite;
@@ -298,7 +298,7 @@ void MapManager::drawMap(sf::RenderWindow &window)
             if (tile.is_reverse) {
                 sprite.setScale(-1, 1);
             }
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == STAIRS_2) {
             sf::Sprite sprite;
@@ -308,7 +308,7 @@ void MapManager::drawMap(sf::RenderWindow &window)
             if (tile.is_reverse) {
                 sprite.setScale(-1, 1);
             }
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
         else if (tile.cell == STAIRS_3) {
             sf::Sprite sprite;
@@ -318,7 +318,7 @@ void MapManager::drawMap(sf::RenderWindow &window)
             if (tile.is_reverse) {
                 sprite.setScale(-1, 1);
             }
-            window.draw(sprite);
+            i_window.draw(sprite);
         }
     }
 }
