@@ -32,7 +32,8 @@ int main()
     {
         int view_x;
         int prev_view_x;
-        unsigned view_y;
+        int view_y;
+        int prev_view_y;
 
         eventListener(window, event);
 
@@ -43,7 +44,7 @@ int main()
         view_x = std::clamp<int>(round(player.getPosition().x) - 0.5f * (SCREEN_WIDTH - TILE_SIZE), 0, TILE_SIZE * map->get_map_sketch_width() - SCREEN_WIDTH);
         view_y = std::clamp<int>(round(player.getPosition().y) - 0.7f * (SCREEN_HEIGHT - TILE_SIZE), 0, TILE_SIZE * map->get_map_sketch_height() - SCREEN_HEIGHT);
  
-        background.update(view_x, view_y, prev_view_x);
+        background.update(view_x, view_y, prev_view_x, prev_view_y);
 
         camera.update(window, view_x, view_y);
 
@@ -56,6 +57,7 @@ int main()
         window.display();
 
         prev_view_x = view_x;
+        prev_view_y = view_y;
     }
     return 0;
 }

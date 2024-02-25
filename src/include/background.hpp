@@ -11,12 +11,13 @@ private:
     sf::Sprite tower = sf::Sprite();
     sf::Sprite town = sf::Sprite();
     sf::Sprite mountain = sf::Sprite();
+    sf::Clock clock;
 
 public:
     Background();
     ~Background();
 
     void setPosition(sf::Vector2f pos);
-    void update(int i_view_x, unsigned i_view_y, int i_prev_view_x);
+    void update(int i_view_x, int i_view_y, int i_prev_view_x, int i_prev_view_y);
     void draw(sf::RenderWindow &window);
 };
