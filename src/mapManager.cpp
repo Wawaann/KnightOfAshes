@@ -9,19 +9,9 @@ MapManager::~MapManager()
     
 }
 
-unsigned short MapManager::get_map_sketch_height() const
-{
-    return this->map_sketch.getSize().y;
-}
-
-unsigned short MapManager::get_map_sketch_width() const
-{
-    return this->map_sketch.getSize().x;
-}
-
 void MapManager::loadMap(Player &i_player)
 {
-    map_sketch.loadFromFile("./assets/levels/level" + std::to_string(static_cast<unsigned short>(this->current_level)) + ".png");
+    map_sketch.loadFromFile("./assets/levels/level_sketch_" + std::to_string(static_cast<unsigned short>(this->current_level)) + ".png");
 
     unsigned short map_height = this->get_map_sketch_height();
     unsigned short map_width = this->get_map_sketch_width();
@@ -35,15 +25,15 @@ void MapManager::loadMap(Player &i_player)
 
             // (0, 0, 0)-> UNDERGROUND_0
             if (map_sketch.getPixel(j, i) == sf::Color(0, 0, 0)) {
-                this->map.insert({std::make_tuple(j, i), Tile(UNDERGROUND_0, sf::Vector2f(j * TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * UNDERGROUND_0, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), false, true)});
+                this->map.insert({std::make_tuple(j, i), Tile(UNDERGROUND_0, sf::Vector2f(j * TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * UNDERGROUND_0, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), false, false)});
             }
             // (5, 5, 5) -> UNDERGROUND_1
             else if (map_sketch.getPixel(j, i) == sf::Color(5, 5, 5)) {
-                this->map.insert({std::make_tuple(j, i), Tile(UNDERGROUND_1, sf::Vector2f(j * TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * UNDERGROUND_1, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), false, true)});
+                this->map.insert({std::make_tuple(j, i), Tile(UNDERGROUND_1, sf::Vector2f(j * TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * UNDERGROUND_1, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), false, false)});
             }
             // (10, 10, 10) -> UNDERGROUND_2
             else if (map_sketch.getPixel(j, i) == sf::Color(10, 10, 10)) {
-                this->map.insert({std::make_tuple(j, i), Tile(UNDERGROUND_2, sf::Vector2f(j * TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * UNDERGROUND_2, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), false, true)});
+                this->map.insert({std::make_tuple(j, i), Tile(UNDERGROUND_2, sf::Vector2f(j * TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * UNDERGROUND_2, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), false, false)});
             }
             // (100, 100, 100) -> GROUND_0
             else if (map_sketch.getPixel(j, i) == sf::Color(100, 100, 100)) {
@@ -101,8 +91,9 @@ void MapManager::loadMap(Player &i_player)
                 this->map.insert({std::make_tuple(j, i), Tile(BORDER_1, sf::Vector2f(j * TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * BORDER_1, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), false, true)});
             }
             // (165, 165, 165) -> BORDER_2
+            // AJouter la possibilité de le reverse idiot !
             else if (map_sketch.getPixel(j, i) == sf::Color(165, 165, 165)) {
-                this->map.insert({std::make_tuple(j, i), Tile(BORDER_2, sf::Vector2f(j * TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * BORDER_2, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), false, true)});
+                this->map.insert({std::make_tuple(j, i), Tile(BORDER_2, sf::Vector2f(j * TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * BORDER_2, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), false, false)});
             }
             // (170, 170, 170) -> STAIRS_0
             else if (map_sketch.getPixel(j, i) == sf::Color(170, 170, 170)) {
@@ -114,16 +105,16 @@ void MapManager::loadMap(Player &i_player)
             // (175, 175, 175) -> STAIRS_1
             else if (map_sketch.getPixel(j, i) == sf::Color(175, 175, 175)) {
                 if (this->map_sketch.getPixel(j - 1, i) == sf::Color(170, 170, 170))
-                    this->map.insert({std::make_tuple(j, i), Tile(STAIRS_1, sf::Vector2f(j * TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * STAIRS_1, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), false, true)});
+                    this->map.insert({std::make_tuple(j, i), Tile(STAIRS_1, sf::Vector2f(j * TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * STAIRS_1, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), false, false)});
                 else
-                    this->map.insert({std::make_tuple(j, i), Tile(STAIRS_1, sf::Vector2f(j * TILE_SIZE + TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * STAIRS_1, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), true, true)}); // reverse
+                    this->map.insert({std::make_tuple(j, i), Tile(STAIRS_1, sf::Vector2f(j * TILE_SIZE + TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * STAIRS_1, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), true, false)}); // reverse
             }
             // (180, 180, 180) -> STAIRS_2
             else if (map_sketch.getPixel(j, i) == sf::Color(180, 180, 180)) {
                 if (this->map_sketch.getPixel(j + 1, i) == sf::Color(185, 185, 185))
-                    this->map.insert({std::make_tuple(j, i), Tile(STAIRS_2, sf::Vector2f(j * TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * STAIRS_2, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), false, true)});
+                    this->map.insert({std::make_tuple(j, i), Tile(STAIRS_2, sf::Vector2f(j * TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * STAIRS_2, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), false, false)});
                 else
-                    this->map.insert({std::make_tuple(j, i), Tile(STAIRS_2, sf::Vector2f(j * TILE_SIZE + TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * STAIRS_2, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), true, true)});
+                    this->map.insert({std::make_tuple(j, i), Tile(STAIRS_2, sf::Vector2f(j * TILE_SIZE + TILE_SIZE, i * TILE_SIZE), sf::IntRect(TILE_SIZE * STAIRS_2, 0, TILE_SIZE, TILE_SIZE), sf::FloatRect(j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE), true, false)});
             }
             // (185, 185, 185) -> STAIRS_3
             else if (map_sketch.getPixel(j, i) == sf::Color(185, 185, 185)) {
@@ -142,183 +133,62 @@ void MapManager::update_levelsketch(const unsigned short i_current_level)
     this->current_level = i_current_level;
 }
 
-// A fix les sprite sont pas bon
+void MapManager::update()
+{
+    for (auto& [coord, tile] : this->map) {
+        if (tile.is_ground) {
+            this->map_ground_tile.push_back(tile);
+        }
+    }
+}
 
 void MapManager::drawMap(sf::RenderWindow &i_window)
 {
     sf::Texture texture;
     texture.loadFromFile("./assets/tile.png");
+
+    sf::RectangleShape hitbox = sf::RectangleShape(sf::Vector2f(TILE_SIZE, TILE_SIZE));
+    hitbox.setFillColor(sf::Color::Transparent);
+    hitbox.setOutlineColor(sf::Color::White);
+    hitbox.setOutlineThickness(2);
+
+    std::vector<CELL> revers_tile{EDGE_0, BORDER_2, STAIRS_0, STAIRS_1, STAIRS_2, STAIRS_3};
+
     for (auto& [coord, tile] : this->map) {
-        if (tile.cell == UNDERGROUND_0) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == UNDERGROUND_1) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == UNDERGROUND_2) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == GROUND_0) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == GROUND_1) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == GROUND_2) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == GROUND_3) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == EDGE_0) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
+        hitbox.setPosition(tile.pos);
+
+        sf::Sprite sprit;
+        sprit.setTexture(texture);
+        sprit.setPosition(tile.pos);
+        sprit.setTextureRect(tile.texture_rect);
+
+        if (std::find(revers_tile.begin(), revers_tile.end(), tile.cell) != revers_tile.end()) {
             if (tile.is_reverse) {
-                sprite.setScale(-1, 1);
+                sprit.setScale(-1, 1);
             }
-            i_window.draw(sprite);
         }
-        else if (tile.cell == EDGE_1) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
+        else {
             if (tile.is_reverse) {
-                sprite.setScale(-1, 1);
+                sprit.setScale(-1, 1);
             }
-            i_window.draw(sprite);
         }
-        else if (tile.cell == EDGE_2) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            if (tile.is_reverse) {
-                sprite.setScale(-1, 1);
-            }
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == PLATFORM_0) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == PLATFORM_1) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == PLATFORM_2) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == PLATFORM_3) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == BORDER_0) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == BORDER_1) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == BORDER_2) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            if (tile.is_reverse) {
-                sprite.setScale(-1, 1);
-            }
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == STAIRS_0) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            if (tile.is_reverse) {
-                sprite.setScale(-1, 1);
-            }
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == STAIRS_1) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            if (tile.is_reverse) {
-                sprite.setScale(-1, 1);
-            }
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == STAIRS_2) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            if (tile.is_reverse) {
-                sprite.setScale(-1, 1);
-            }
-            i_window.draw(sprite);
-        }
-        else if (tile.cell == STAIRS_3) {
-            sf::Sprite sprite;
-            sprite.setTexture(texture);
-            sprite.setPosition(tile.pos);
-            sprite.setTextureRect(tile.texture_rect);
-            if (tile.is_reverse) {
-                sprite.setScale(-1, 1);
-            }
-            i_window.draw(sprite);
-        }
+
+        i_window.draw(sprit);
+        i_window.draw(hitbox);
     }
+}
+
+unsigned short MapManager::get_map_sketch_height() const
+{
+    return this->map_sketch.getSize().y;
+}
+
+unsigned short MapManager::get_map_sketch_width() const
+{
+    return this->map_sketch.getSize().x;
+}
+
+std::vector<Tile> MapManager::get_map_ground_tile() const
+{
+    return this->map_ground_tile;
 }

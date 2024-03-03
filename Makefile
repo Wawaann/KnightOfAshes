@@ -1,8 +1,8 @@
-SRC	=	src/main.cpp			\
-		src/event.cpp			\
-		src/mapManager.cpp		\
-		src/background.cpp		\
+SRC	=	src/background.cpp		\
 		src/camera.cpp			\
+		src/event.cpp			\
+		src/main.cpp			\
+		src/mapManager.cpp		\
 		src/player.cpp			\
 
 OBJ	=	$(SRC:.cpp=.o)

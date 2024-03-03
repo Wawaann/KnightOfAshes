@@ -21,6 +21,10 @@
     //for map
     constexpr unsigned short TILE_SIZE = 128;
 
+    //for player
+    constexpr float MAX_VERTICAL_SPEED = 15;
+    constexpr float GRAVITY = 0.35f;
+
     enum CELL
     {
         GROUND_0,

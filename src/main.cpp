@@ -39,12 +39,39 @@ int main()
 
         eventListener(window, event);
 
-        player.update();
-
         window.clear();
 
-        view_x = std::clamp<int>(round(player.getPosition().x) - 0.5f * (SCREEN_WIDTH - TILE_SIZE), 0, TILE_SIZE * map->get_map_sketch_width() - SCREEN_WIDTH);
-        view_y = std::clamp<int>(round(player.getPosition().y) - 0.7f * (SCREEN_HEIGHT - TILE_SIZE), 0, TILE_SIZE * map->get_map_sketch_height() - SCREEN_HEIGHT);
+        sf::RectangleShape ceil_0 = sf::RectangleShape(sf::Vector2f(TILE_SIZE, TILE_SIZE));
+        sf::RectangleShape ceil_1 = sf::RectangleShape(sf::Vector2f(TILE_SIZE, TILE_SIZE));
+        sf::RectangleShape ceil_2 = sf::RectangleShape(sf::Vector2f(TILE_SIZE, TILE_SIZE));
+        sf::RectangleShape ceil_3 = sf::RectangleShape(sf::Vector2f(TILE_SIZE, TILE_SIZE));
+
+        ceil_0.setFillColor(sf::Color::Transparent);
+        ceil_1.setFillColor(sf::Color::Transparent);
+        ceil_2.setFillColor(sf::Color::Transparent);
+        ceil_3.setFillColor(sf::Color::Transparent);
+
+        ceil_0.setOutlineColor(sf::Color::Red);
+        ceil_1.setOutlineColor(sf::Color::Blue);
+        ceil_2.setOutlineColor(sf::Color::Green);
+        ceil_3.setOutlineColor(sf::Color::Yellow);
+
+        ceil_0.setOutlineThickness(1);
+        ceil_1.setOutlineThickness(1);
+        ceil_2.setOutlineThickness(1);
+        ceil_3.setOutlineThickness(1);
+
+        ceil_0.setPosition(std::floor(player.getPosition().x / TILE_SIZE) * TILE_SIZE, std::floor(player.getPosition().y / TILE_SIZE) * TILE_SIZE);
+        ceil_1.setPosition(std::ceil(player.getPosition().x / TILE_SIZE) * TILE_SIZE, std::floor(player.getPosition().y / TILE_SIZE) * TILE_SIZE);
+        ceil_2.setPosition(std::floor(player.getPosition().x / TILE_SIZE) * TILE_SIZE, std::ceil(player.getPosition().y / TILE_SIZE) * TILE_SIZE);
+        ceil_3.setPosition(std::ceil(player.getPosition().x / TILE_SIZE) * TILE_SIZE, std::ceil(player.getPosition().y / TILE_SIZE) * TILE_SIZE);
+
+        map->update();
+
+        player.update(map->get_map_ground_tile());
+
+        view_x = std::clamp<int>(round(player.getPosition().x) - 0.45f * (SCREEN_WIDTH - TILE_SIZE), 0, TILE_SIZE * map->get_map_sketch_width() - SCREEN_WIDTH);
+        view_y = std::clamp<int>(round(player.getPosition().y) - 0.6f * (SCREEN_HEIGHT - TILE_SIZE), 0, TILE_SIZE * map->get_map_sketch_height() - SCREEN_HEIGHT);
  
         background.update(view_x, view_y, prev_view_x, prev_view_y);
 
@@ -55,6 +82,11 @@ int main()
         map->drawMap(window);
 
         player.draw(window);
+
+        window.draw(ceil_0);
+        window.draw(ceil_1);
+        window.draw(ceil_2);
+        window.draw(ceil_3);
 
         window.display();
 
