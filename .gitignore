@@ -1,3 +1,4 @@
-KnightOfAshes
-src/*.o
-.vscode
+*.o
+*.a
+so_long
+So_long-Tester
