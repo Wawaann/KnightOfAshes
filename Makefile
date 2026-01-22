@@ -37,7 +37,7 @@ CC		=	clang -o $(NAME) $(MLX_INCLUDE) $(INCLUDE) $(OBJ) $(LIB) $(FLAG)
 
 FLAG	=	-Wall -Wextra -Werror -g3
 
-NAME	=	so_long
+NAME	=	knightOfAshes
 
 DEFAULT	=	\033[0m
 GREEN	=	\033[0;32m
